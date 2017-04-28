@@ -31,6 +31,6 @@ use Mix.Config
 
 config :ex_retriever, Consumer,
   url: "amqp://localhost",
-  exchange: "test-exchange",
-  routing_key: "test-messages",
-  service: "my-service"
+  exchange: "urls",
+  routing_key: "requests",
+  service: "retriever"
