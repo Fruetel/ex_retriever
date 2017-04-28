@@ -14,7 +14,8 @@ defmodule ExRetriever.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [extra_applications: [:logger, :httpoison, :tackle]]
+    [extra_applications: [:logger, :httpoison, :tackle],
+     mod: {ExRetriever, []}]
   end
 
   # Dependencies can be Hex packages:
