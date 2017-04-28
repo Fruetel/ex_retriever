@@ -28,3 +28,9 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :ex_retriever, Consumer,
+  url: "amqp://localhost",
+  exchange: "test-exchange",
+  routing_key: "test-messages",
+  service: "my-service"
