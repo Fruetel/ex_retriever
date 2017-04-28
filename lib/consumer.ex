@@ -5,10 +5,14 @@ defmodule Consumer do
     routing_key: config[:routing_key],
     service: config[:service]
 
-  def handle_message(message) do
-    IO.puts "A message arrived. Life is good!"
+  require Logger
 
-    IO.puts message
+  def handle_message(message) do
+    Logger.info "Received URL: #{message}"
+
+    message
+    |> Retriever.get
+    |> IO.inspect
   end
 
   defp config do
