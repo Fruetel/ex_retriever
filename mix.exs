@@ -14,7 +14,7 @@ defmodule ExRetriever.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [extra_applications: [:logger, :httpoison]]
+    [extra_applications: [:logger, :httpoison, :tackle]]
   end
 
   # Dependencies can be Hex packages:
@@ -28,6 +28,8 @@ defmodule ExRetriever.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:httpoison, "~> 0.11.1"},
+     {:amqp, "0.2.0-pre.1", override: true},
+     {:tackle, github: "renderedtext/ex-tackle"},
      {:mock, "~> 0.2", only: :test}]
   end
 end
