@@ -31,6 +31,7 @@ defmodule ExRetriever.Mixfile do
     [{:httpoison, "~> 0.11.1"},
      {:amqp, "0.2.0-pre.1", override: true},
      {:tackle, github: "renderedtext/ex-tackle"},
+     {:poison, "~> 3.0"},
      {:mock, "~> 0.2", only: :test}]
   end
 end

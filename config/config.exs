@@ -32,5 +32,10 @@ use Mix.Config
 config :ex_retriever, Consumer,
   url: "amqp://localhost",
   exchange: "urls",
-  routing_key: "requests",
+  routing_key: "requested",
   service: "retriever"
+
+config :ex_retriever, Publisher,
+  url: "amqp://localhost",
+  exchange: "documents",
+  routing_key: "unknown"

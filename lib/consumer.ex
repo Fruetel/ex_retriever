@@ -12,10 +12,23 @@ defmodule Consumer do
 
     message
     |> Retriever.get
-    |> IO.inspect
+    |> parse_response
+    |> Publisher.publish
+  end
+
+  defp parse_response({:ok, response}) do
+    Poison.encode! %{
+      status_code: response.status_code,
+      headers: headers(response),
+      body: response.body
+    }
   end
 
   defp config do
     Application.get_env(:ex_retriever, Consumer)
+  end
+
+  defp headers(response) do
+    Map.new(response.headers)
   end
 end
