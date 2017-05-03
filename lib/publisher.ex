@@ -11,6 +11,7 @@ defmodule Publisher do
     }
     Tackle.publish(document, options)
     Logger.info "Published"
+    :ok
   end
 
   defp config do
