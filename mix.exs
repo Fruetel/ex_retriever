@@ -30,6 +30,7 @@ defmodule ExRetriever.Mixfile do
   defp deps do
     [{:httpoison, "~> 0.11.1"},
      {:amqp, "0.2.0-pre.1", override: true},
+     {:credo, "~> 0.7", only: :dev},
      {:tackle, github: "renderedtext/ex-tackle"},
      {:poison, "~> 3.0"},
      {:mock, "~> 0.2", only: :test}]

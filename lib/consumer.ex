@@ -1,4 +1,7 @@
 defmodule Consumer do
+
+  @moduledoc false
+
   use Tackle.Consumer,
     url: config[:url],
     exchange: config[:exchange],

@@ -1,5 +1,7 @@
 defmodule Publisher do
 
+  @moduledoc false
+
   require Logger
 
   def publish(document) do

@@ -1,5 +1,7 @@
 defmodule Retriever do
 
+  @moduledoc false
+
   require Logger
 
   def get(url) do
