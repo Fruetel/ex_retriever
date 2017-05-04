@@ -30,12 +30,12 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :ex_retriever, Consumer,
-  url: "amqp://localhost",
-  exchange: "urls",
-  routing_key: "requested",
-  service: "retriever"
+  url: System.get_env("RABBITMQ_URL") || "amqp://localhost",
+  exchange: System.get_env("INCOMING_EXCHANGE") || "urls",
+  routing_key: System.get_env("INCOMING_ROUTING_KEY") || "requested",
+  service: System.get_env("SERVICE_NAME") || "ex_retriever"
 
 config :ex_retriever, Publisher,
-  url: "amqp://localhost",
-  exchange: "documents",
-  routing_key: "unknown"
+  url: System.get_env("RABBITMQ_URL") || "amqp://localhost",
+  exchange: System.get_env("OUTGOING_EXCHANGE") || "documents",
+  routing_key: System.get_env("OUTGOING_ROUTING_KEY") || "unprocessed"
