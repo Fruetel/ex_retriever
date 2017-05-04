@@ -8,9 +8,11 @@ defmodule Consumer do
   require Logger
 
   def handle_message(message) do
-    Logger.info "Received URL: #{message}"
+    Logger.info "Received message: #{message}"
 
     message
+    |> parse_message
+    |> extract_url
     |> Retriever.get
     |> parse_response
     |> Publisher.publish
@@ -30,5 +32,13 @@ defmodule Consumer do
 
   defp headers(response) do
     Map.new(response.headers)
+  end
+
+  defp parse_message(message) do
+    message |> Poison.decode!(as: %Consumer.Message{})
+  end
+
+  defp extract_url(%Consumer.Message{url: url}) do
+    url
   end
 end
