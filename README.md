@@ -1,24 +1,23 @@
 # ExRetriever
 
-**TODO: Add description**
+ExRetriever is a small microservice application that can be used for document retrieval in a distributed web crawler architecture. It fetches messages containing URLs from a RabbitMq exchange, retrieves the URLs and publishes the result to another exchange.
 
-## Installation
+RabbitMq parameters can be configured by setting appropriate environment variables:
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+RABBITMQ_URL
+URL of the RabbitMq instance to use, e.g. amqp://user:password@rabbitmq.example.com
 
-  1. Add `ex_retriever` to your list of dependencies in `mix.exs`:
+INCOMING_EXCHANGE
+Name of the exchange that delivers messages for URLs to be retrieved
 
-    ```elixir
-    def deps do
-      [{:ex_retriever, "~> 0.1.0"}]
-    end
-    ```
+INCOMING_ROUTING_KEY
+Routing key that is used to bind to the incoming exchange
 
-  2. Ensure `ex_retriever` is started before your application:
+SERVICE_NAME
+Name of the service, e.g. ex_retriever
 
-    ```elixir
-    def application do
-      [applications: [:ex_retriever]]
-    end
-    ```
+OUTGOING_EXCHANGE
+Name of the exchange where retrieved documents should be published
 
+OUTGOING_ROUTING_KEY
+Routing key for published documents
