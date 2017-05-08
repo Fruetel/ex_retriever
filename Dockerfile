@@ -11,6 +11,7 @@ COPY ./mix.exs /code/
 COPY ./mix.lock /code/
 
 ENV MIX_ENV prod
+RUN mix deps.update amqp
 RUN mix deps.get
 RUN mix deps.compile
 
