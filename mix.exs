@@ -29,7 +29,9 @@ defmodule ExRetriever.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:httpoison, "~> 0.11.1"},
-     {:amqp, "0.2.0-pre.1", override: true},
+     {:amqp, "~> 0.1.4"},
+     {:amqp_client, github: "jbrisbin/amqp_client", override: true},
+     {:rabbit_common, github: "jbrisbin/rabbit_common", override: true},
      {:credo, "~> 0.7", only: :dev},
      {:tackle, github: "renderedtext/ex-tackle"},
      {:poison, "~> 3.0"},
