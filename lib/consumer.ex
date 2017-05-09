@@ -17,7 +17,6 @@ defmodule Consumer do
     |> parse_message
     |> extract_url
     |> Retriever.get
-    |> Poison.encode!
     |> Publisher.publish
   end
 

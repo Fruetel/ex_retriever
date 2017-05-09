@@ -5,7 +5,7 @@ defmodule Publisher do
   require Logger
 
   def publish(document) do
-    Logger.info "Publishing result"
+    Logger.info "Publishing result for #{document.url}"
 
     options = %{
       url: config[:url],
@@ -13,7 +13,8 @@ defmodule Publisher do
       routing_key: config[:routing_key]
     }
 
-    Tackle.publish(document, options)
+    payload = Poison.encode!(document)
+    Tackle.publish(payload, options)
   end
 
   defp config do

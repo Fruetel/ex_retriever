@@ -14,13 +14,11 @@ defmodule ConsumerTest do
       url: "http://example.org"
     }
 
-    parsed_response = "{\"url\":\"http://example.org\",\"status_code\":200,\"headers\":{\"content-type\":\"text/html\"},\"body\":\"Body\"}"
-
     with_mock Retriever, [get: fn _ -> document end] do
       with_mock Publisher, [publish: fn _ -> :ok end] do
         assert :ok == Consumer.handle_message(message)
         assert called Retriever.get(url)
-        assert called Publisher.publish(parsed_response)
+        assert called Publisher.publish(document)
       end
     end
   end
