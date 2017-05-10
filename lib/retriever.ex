@@ -6,7 +6,7 @@ defmodule Retriever do
 
   def get(url) do
     Logger.info "Retrieving #{url}"
-    response = parse_response HTTPoison.get(url, request_headers, options)
+    response = parse_response HTTPoison.get(url, request_headers(), options())
     Map.put response, :url, url
   end
 
@@ -29,6 +29,8 @@ defmodule Retriever do
   end
 
   defp options do
-    []
+    [
+      recv_timeout: Application.get_env(:ex_retriever, Retriever)[:recv_timeout]
+    ]
   end
 end

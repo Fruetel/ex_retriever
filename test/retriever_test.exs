@@ -22,7 +22,7 @@ defmodule RetrieverTest do
       assert called HTTPoison.get(
         "http://www.example.com",
         [{"user-agent", "Mozilla/5.0 (compatible; ExRetriever; +https://github.com/Fruetel/ex_retriever)"}],
-        []
+        [recv_timeout: 20000]
       )
     end
   end

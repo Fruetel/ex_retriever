@@ -7,7 +7,8 @@ config :ex_retriever, Consumer,
   service: System.get_env("SERVICE_NAME") || "ex_retriever"
 
 config :ex_retriever, Retriever,
-  user_agent: System.get_env("HTTP_USER_AGENT") || "Mozilla/5.0 (compatible; ExRetriever; +https://github.com/Fruetel/ex_retriever)"
+  user_agent: System.get_env("HTTP_USER_AGENT") || "Mozilla/5.0 (compatible; ExRetriever; +https://github.com/Fruetel/ex_retriever)",
+  recv_timeout: System.get_env("HTTP_RECV_TIMEOUT") || 20000
 
 config :ex_retriever, Publisher,
   url: System.get_env("RABBITMQ_URL") || "amqp://localhost",
