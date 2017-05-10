@@ -16,9 +16,14 @@ defmodule RetrieverTest do
       url: "http://www.example.com"
     }
 
-    with_mock HTTPoison, [get: fn _ -> {:ok, http_response} end] do
+    with_mock HTTPoison, [get: fn _, _, _ -> {:ok, http_response} end] do
       result = Retriever.get("http://www.example.com")
       assert expected_result == result
+      assert called HTTPoison.get(
+        "http://www.example.com",
+        [{"user-agent", "Mozilla/5.0 (compatible; ExRetriever; +https://github.com/Fruetel/ex_retriever)"}],
+        []
+      )
     end
   end
 end
