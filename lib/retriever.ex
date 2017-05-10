@@ -30,6 +30,7 @@ defmodule Retriever do
 
   defp options do
     [
+      timeout: Application.get_env(:ex_retriever, Retriever)[:timeout],
       recv_timeout: Application.get_env(:ex_retriever, Retriever)[:recv_timeout]
     ]
   end
