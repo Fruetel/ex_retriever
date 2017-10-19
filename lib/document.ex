@@ -1,4 +1,4 @@
-defmodule Retriever.Document do
+defmodule Document do
 
   @moduledoc false
 

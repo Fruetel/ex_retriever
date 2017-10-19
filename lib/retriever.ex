@@ -10,10 +10,17 @@ defmodule Retriever do
     |> HTTPoison.get(request_headers(), options())
     |> parse_response
     |> Map.put(:url, url)
+    |> publish
+  end
+
+  defp publish(document) do
+    Logger.info "Publishing"
+    :ok = Publisher.publish("documents", "retrieved", document)
+    document
   end
 
   defp parse_response({:ok, response}) do
-    %Retriever.Document{
+    %Document{
       status_code: response.status_code,
       headers: response_headers(response),
       body: response.body

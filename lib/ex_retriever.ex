@@ -8,7 +8,8 @@ defmodule ExRetriever do
     import Supervisor.Spec
 
     children = [
-      worker(Consumer, [])
+      worker(Consumer, []),
+      worker(Publisher, [])
     ]
 
     opts = [strategy: :one_for_one, name: ExRetriever.Supervisor]

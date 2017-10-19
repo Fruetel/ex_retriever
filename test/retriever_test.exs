@@ -9,7 +9,7 @@ defmodule RetrieverTest do
       body: "some body"
     }
 
-    expected_result = %Retriever.Document{
+    expected_result = %Document{
       status_code: 200,
       headers: %{"key" => "value"},
       body: "some body",
