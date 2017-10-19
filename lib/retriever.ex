@@ -4,10 +4,12 @@ defmodule Retriever do
 
   require Logger
 
-  def get(url) do
+  def fetch(%Link{destination_url: url}) do
     Logger.info "Retrieving #{url}"
-    response = parse_response HTTPoison.get(url, request_headers(), options())
-    Map.put response, :url, url
+    url
+    |> HTTPoison.get(request_headers(), options())
+    |> parse_response
+    |> Map.put(:url, url)
   end
 
   defp parse_response({:ok, response}) do

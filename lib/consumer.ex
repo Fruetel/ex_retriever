@@ -2,33 +2,80 @@ defmodule Consumer do
 
   @moduledoc false
 
-  use Tackle.Consumer,
-    url: config[:url],
-    exchange: config[:exchange],
-    routing_key: config[:routing_key],
-    service: config[:service]
-
   require Logger
 
-  def handle_message(message) do
-    Logger.info "Received message: #{message}"
+  use GenServer
+  use AMQP
 
-    message
-    |> parse_message
-    |> extract_url
-    |> Retriever.get
-    |> Publisher.publish
+  def start_link do
+    GenServer.start_link(__MODULE__, [], [])
   end
 
-  defp config do
-    Application.get_env(:ex_retriever, Consumer)
+  @exchange    "links"
+  @routing_key "scheduled"
+  @queue       "ex_retriever"
+  @queue_error "#{@queue}_error"
+
+  def init(_opts) do
+    rabbitmq_connect()
   end
 
-  defp parse_message(message) do
-    message |> Poison.decode!(as: %Consumer.Message{})
+  def handle_info({:basic_consume_ok, %{consumer_tag: _consumer_tag}}, chan) do
+    {:noreply, chan}
+  end
+  def handle_info({:basic_cancel, %{consumer_tag: _consumer_tag}}, chan) do
+    {:stop, :normal, chan}
+  end
+  def handle_info({:basic_cancel_ok, %{consumer_tag: _consumer_tag}}, chan) do
+    {:noreply, chan}
+  end
+  def handle_info({:basic_deliver, payload, %{delivery_tag: tag, redelivered: redelivered}}, chan) do
+    spawn fn -> consume(chan, tag, redelivered, payload) end
+    {:noreply, chan}
+  end
+  def handle_info({:DOWN, _, :process, _pid, _reason}, _) do
+    {:ok, chan} = rabbitmq_connect()
+    {:noreply, chan}
   end
 
-  defp extract_url(%Consumer.Message{url: url}) do
-    url
+  defp consume(channel, tag, redelivered, payload) do
+    Logger.info "Consuming message"
+    payload
+    |> Poison.decode!(as: %Link{})
+    |> Retriever.fetch
+    |> IO.inspect
+
+    Basic.ack channel, tag
+
+    rescue _exception ->
+    Basic.reject channel, tag, requeue: not redelivered
+    Logger.error "Error processing #{payload}"
+  end
+
+  defp rabbitmq_connect do
+    case Connection.open(Application.get_env(
+      :ex_retriever, Consumer)[:rabbitmq_url]
+    ) do
+      {:ok, conn} ->
+        Logger.info "RabbitMq connection established"
+        # Get notifications when the connection goes down
+        Process.monitor(conn.pid)
+        # Everything else remains the same
+        {:ok, chan} = Channel.open(conn)
+        Basic.qos(chan, prefetch_count: 10)
+        Queue.declare(chan, @queue_error, durable: true)
+        Queue.declare(chan, @queue, durable: true,
+                      arguments: [{"x-dead-letter-exchange", :longstr, ""},
+                                  {"x-dead-letter-routing-key", :longstr, @queue_error}])
+                                  Exchange.topic(chan, @exchange, durable: true)
+                                  Queue.bind(chan, @queue, @exchange,
+                                             [routing_key: @routing_key])
+                                             {:ok, _consumer_tag} = Basic.consume(chan, @queue)
+                                             {:ok, chan}
+      {:error, _} ->
+        # Reconnection loop
+        :timer.sleep(10_000)
+        rabbitmq_connect()
+    end
   end
 end
