@@ -1,17 +1,30 @@
+# This file is responsible for configuring your application
+# and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :ex_retriever, Consumer,
-  url: System.get_env("RABBITMQ_URL") || "amqp://localhost",
-  exchange: System.get_env("INCOMING_EXCHANGE") || "urls",
-  routing_key: System.get_env("INCOMING_ROUTING_KEY") || "requested",
-  service: System.get_env("SERVICE_NAME") || "ex_retriever"
+# This configuration is loaded before any dependency and is restricted
+# to this project. If another project depends on this project, this
+# file won't be loaded nor affect the parent project. For this reason,
+# if you want to provide default values for your application for
+# 3rd-party users, it should be done in your "mix.exs" file.
 
-config :ex_retriever, Retriever,
-  user_agent: System.get_env("HTTP_USER_AGENT") || "Mozilla/5.0 (compatible; ExRetriever; +https://github.com/Fruetel/ex_retriever)",
-  timeout: System.get_env("HTTP_CONNECT_TIMEOUT") || 10000,
-  recv_timeout: System.get_env("HTTP_RECV_TIMEOUT") || 20000
+# You can configure your application as:
+#
+#     config :ex_retriever, key: :value
+#
+# and access this configuration in your application as:
+#
+#     Application.get_env(:ex_retriever, :key)
+#
+# You can also configure a 3rd-party app:
+#
+#     config :logger, level: :info
+#
 
-config :ex_retriever, Publisher,
-  url: System.get_env("RABBITMQ_URL") || "amqp://localhost",
-  exchange: System.get_env("OUTGOING_EXCHANGE") || "documents",
-  routing_key: System.get_env("OUTGOING_ROUTING_KEY") || "unprocessed"
+# It is also possible to import configuration files, relative to this
+# directory. For example, you can emulate configuration per environment
+# by uncommenting the line below and defining dev.exs, test.exs and such.
+# Configuration from the imported file will override the ones defined
+# here (which is why it is important to import them last).
+#
+import_config "#{Mix.env}.exs"
