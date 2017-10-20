@@ -39,7 +39,7 @@ defmodule Consumer do
   end
 
   defp consume(channel, tag, redelivered, payload) do
-    Logger.info "Consuming message"
+    Logger.debug "Consuming message"
     payload
     |> Poison.decode!(as: %Link{})
     |> Retriever.fetch
@@ -56,7 +56,7 @@ defmodule Consumer do
       :ex_retriever, Consumer)[:rabbitmq_url]
     ) do
       {:ok, conn} ->
-        Logger.info "RabbitMq connection established"
+        Logger.debug "RabbitMq connection established"
         # Get notifications when the connection goes down
         Process.monitor(conn.pid)
         # Everything else remains the same

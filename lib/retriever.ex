@@ -14,7 +14,7 @@ defmodule Retriever do
   end
 
   defp publish(document) do
-    Logger.info "Publishing"
+    Logger.debug "Publishing"
     :ok = Publisher.publish("documents", "retrieved", document)
     document
   end
