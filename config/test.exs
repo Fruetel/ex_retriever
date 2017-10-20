@@ -10,3 +10,6 @@ config :ex_retriever, Retriever,
 
 config :ex_retriever, Publisher,
   rabbitmq_url: "amqp://guest:guest@localhost"
+
+config :logger,
+  level: :error
