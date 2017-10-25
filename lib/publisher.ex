@@ -22,8 +22,9 @@ defmodule Publisher do
 
   def handle_cast({:publish, exchange, routing_key, %Document{} = document}, state) do
     Logger.debug "Publishing to #{exchange} with routing key #{routing_key}"
-    payload = Poison.encode!(document)
+    payload = Document.encode(document)
     Basic.publish(state[:channel], exchange, routing_key, payload)
     {:noreply, state}
   end
+
 end
