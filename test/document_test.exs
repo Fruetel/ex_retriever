@@ -25,4 +25,26 @@ defmodule DocumentTest do
     expected_result = "{\"url\":\"http://www.example.com\",\"status_code\":200,\"headers\":{\"Content-Type\":\"image/jpeg\"},\"body\":\"QmluYXJ5IGRhdGE=\"}"
     assert expected_result == Document.encode(document)
   end
+
+  test "It determines the primary content type" do
+    document = %Document{
+      status_code: 200,
+      url: "http://www.example.com",
+      headers: %{"Content-Type" => "image/jpeg"},
+      body: "Binary data"
+    }
+
+    assert "image" == Document.primary_content_type(document)
+  end
+
+  test "It determines the secondary content type" do
+    document = %Document{
+      status_code: 200,
+      url: "http://www.example.com",
+      headers: %{"Content-Type" => "image/jpeg"},
+      body: "Binary data"
+    }
+
+    assert "jpeg" == Document.secondary_content_type(document)
+  end
 end
