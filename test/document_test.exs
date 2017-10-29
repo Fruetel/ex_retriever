@@ -47,4 +47,16 @@ defmodule DocumentTest do
 
     assert "jpeg" == Document.secondary_content_type(document)
   end
+
+  test "It reports primary and secondary_content_type as unknown when header is missing" do
+    document = %Document{
+      status_code: 200,
+      url: "http://www.example.com",
+      headers: %{},
+      body: "Binary data"
+    }
+
+    assert "unknown" == Document.primary_content_type(document)
+    assert "unknown" == Document.secondary_content_type(document)
+  end
 end

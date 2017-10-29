@@ -25,12 +25,19 @@ defmodule Document do
     |> String.split("/")
     |> Enum.at(0)
   end
+  def primary_content_type(%Document{}) do
+    "unknown"
+  end
 
   def secondary_content_type(%Document{headers: %{"Content-Type" => content_type}}) do
     content_type
     |> String.split("/")
     |> Enum.at(1)
   end
+  def secondary_content_type(%Document{}) do
+    "unknown"
+  end
+
 
   defp encode_binary(%Document{} = document) do
     Logger.debug "Encoding binary document"
