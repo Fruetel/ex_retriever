@@ -33,6 +33,8 @@ defmodule Document do
     content_type
     |> String.split("/")
     |> Enum.at(1)
+    |> String.split(";")
+    |> Enum.at(0)
   end
   def secondary_content_type(%Document{}) do
     "unknown"
