@@ -15,7 +15,10 @@ defmodule Retriever do
 
   defp publish(document) do
     Logger.debug "Publishing"
-    :ok = Publisher.publish("documents", "retrieved", document)
+    primary_content_type = Document.primary_content_type(document)
+    secondary_content_type = Document.secondary_content_type(document)
+    routing_key = "retrieved.#{primary_content_type}.#{secondary_content_type}"
+    :ok = Publisher.publish("documents", routing_key, document)
     document
   end
 
