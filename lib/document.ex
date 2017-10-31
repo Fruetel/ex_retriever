@@ -9,7 +9,11 @@ defmodule Document do
   def encode(%Document{headers: %{"Content-Type" => _content_type}} = document) do
     if  primary_content_type(document) == "text" do
       Logger.debug "Encoding text document"
-      Poison.encode!(document)
+      try do
+        Poison.encode!(document)
+      rescue
+        FunctionClauseError -> "Error encoding text document"
+      end
     else
       Logger.debug "Encoding binary document"
       encode_binary(document)
