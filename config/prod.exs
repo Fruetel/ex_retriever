@@ -12,4 +12,4 @@ config :ex_retriever, Publisher,
   rabbitmq_url: System.get_env("RABBITMQ_URL")
 
 config :logger,
-  level: :info
+  level: System.get_env("LOG_LEVEL") || :info
