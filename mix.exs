@@ -28,8 +28,8 @@ defmodule ExRetriever.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:httpoison, "~> 0.11.1"},
-     {:amqp, "1.0.0-pre.2"},
+    [{:httpoison, "~> 0.13.0"},
+     {:amqp, "1.0.0-pre.3"},
      {:credo, "~> 0.7", only: :dev},
      {:poison, "~> 3.0"},
      {:mock, "~> 0.2", only: :test}]
