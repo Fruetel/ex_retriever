@@ -4,8 +4,8 @@ services:
 stages:
   - build
 variables:
-  CONTAINER_TEST_IMAGE: registry.gitlab.com/fruetel/machinegenerated.io:$CI_BUILD_REF_NAME
-  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/fruetel/machinegenerated.io:latest
+  CONTAINER_TEST_IMAGE: registry.gitlab.com/langbein/ex_retriever:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/langbein/ex_retriever:latest
 
 build:
   stage: build
@@ -13,5 +13,5 @@ build:
     - ls -al
     - echo "Running Docker build"
     - docker build -t $CONTAINER_TEST_IMAGE .
-    - docker run $CONTAINER_TEST_IMAGE ls -al
+    - docker-compose run app test
     - docker push $CONTAINER_TEST_IMAGE
