@@ -4,7 +4,7 @@ defmodule ExRetriever.Mixfile do
   def project do
     [app: :ex_retriever,
      version: "0.1.0",
-     elixir: "~> 1.5",
+     elixir: "~> 1.6",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -29,7 +29,7 @@ defmodule ExRetriever.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:httpoison, "~> 0.13.0"},
-     {:amqp, "1.0.0"},
+     {:amqp, "~> 1.0"},
      {:credo, "~> 0.7", only: :dev},
      {:poison, "~> 3.0"},
      {:mock, "~> 0.2", only: :test}]
