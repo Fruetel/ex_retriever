@@ -10,7 +10,6 @@ COPY ./mix.exs /code/
 
 ENV MIX_ENV prod
 RUN mix deps.get
-RUN mix deps.compile
 
 COPY . /code
 
