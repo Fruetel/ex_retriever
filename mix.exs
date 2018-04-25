@@ -14,7 +14,7 @@ defmodule ExRetriever.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [extra_applications: [:logger, :httpoison],
+    [extra_applications: [:lager, :logger, :httpoison],
      mod: {ExRetriever, []}]
   end
 

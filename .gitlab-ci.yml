@@ -19,6 +19,7 @@ build:
   script:
     - ls -al
     - echo "Running Docker build"
-    - docker build --no-cache -t $CONTAINER_TEST_IMAGE .
+    - docker-compose build
     - docker-compose run app test
+    - docker build --no-cache -t $CONTAINER_TEST_IMAGE .
     - docker push $CONTAINER_TEST_IMAGE
