@@ -9,7 +9,6 @@ WORKDIR /code
 COPY ./mix.exs /code/
 
 ENV MIX_ENV prod
-RUN mix deps.update amqp
 RUN mix deps.get
 RUN mix deps.compile
 
