@@ -7,6 +7,10 @@ RUN mix local.rebar --force
 WORKDIR /code
 
 COPY ./mix.exs /code/
+COPY ./mix.lock /code/
+
+ENV MIX_ENV test
+RUN mix deps.get
 
 ENV MIX_ENV prod
 RUN mix deps.get
