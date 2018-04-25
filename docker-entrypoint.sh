@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Entrypoint started"
+echo $1
+
 if [ "$1" == "test" ]; then
     export MIX_ENV=test
     mix test
