@@ -7,19 +7,23 @@ before_script:
   - apk upgrade
   - apk add python python-dev py-pip build-base
   - pip install docker-compose
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
 
 stages:
-  - build
+  - test
+  - release
 variables:
-  CONTAINER_TEST_IMAGE: registry.gitlab.com/langbein/ex_retriever:$CI_BUILD_REF_NAME
   CONTAINER_RELEASE_IMAGE: registry.gitlab.com/langbein/ex_retriever:latest
 
-build:
-  stage: build
+test:
+  stage: test
   script:
     - ls -al
-    - echo "Running Docker build"
     - docker-compose build
     - docker-compose run app test
-    - docker build --no-cache -t $CONTAINER_TEST_IMAGE .
-    - docker push $CONTAINER_TEST_IMAGE
+
+release:
+  stage: release
+  script:
+    - docker build --no-cache -t $CONTAINER_RELEASE_IMAGE .
+    - docker push $CONTAINER_RELEASE_IMAGE
