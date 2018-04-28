@@ -17,6 +17,7 @@ variables:
   AWS_ECR_REGION: eu-west-1
   CONTAINER_NAME: ex_retriever
   CLUSTER_NAME: langbein
+  SERVICE_NAME: Crawler
 
 test:
   stage: test
@@ -39,5 +40,4 @@ deploy:
   script:
     - pip install ecs-deploy
     - sh ./scripts/login-ecr.sh
-    # Deploy
-    - ecs deploy --region ${AWS_ECR_REGION} ${CLUSTER_NAME} ${CI_PROJECT_NAME} --tag ${CI_COMMIT_SHA}
+    - ecs deploy ${CLUSTER_NAME} ${SERVICE_NAME} --tag ${CI_COMMIT_SHA}
