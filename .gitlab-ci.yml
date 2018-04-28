@@ -33,6 +33,7 @@ publish:
     - docker build -t ex_retriever .
     - sh ./scripts/login-ecr.sh
     - docker tag ex_retriever:latest $AWS_ECR_URL/$CONTAINER_NAME:latest
+    - docker tag ex_retriever:latest $AWS_ECR_URL/$CONTAINER_NAME:$CI_COMMIT_SHA
     - docker push $AWS_ECR_URL/$CONTAINER_NAME:latest
 
 deploy:
