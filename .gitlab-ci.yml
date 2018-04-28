@@ -41,4 +41,4 @@ deploy:
   script:
     - pip install ecs-deploy
     - sh ./scripts/login-ecr.sh
-    - ecs deploy ${CLUSTER_NAME} ${SERVICE_NAME} --tag ${CI_COMMIT_SHA}
+    - ecs deploy ${CLUSTER_NAME} ${SERVICE_NAME} --tag latest
