@@ -30,15 +30,16 @@ test:
 publish:
   stage: publish
   script:
-    - docker build -t ex_retriever .
+    - docker build -t $CONTAINER_NAME .
     - sh ./scripts/login-ecr.sh
     - docker tag ex_retriever:latest $AWS_ECR_URL/$CONTAINER_NAME:latest
     - docker tag ex_retriever:latest $AWS_ECR_URL/$CONTAINER_NAME:$CI_COMMIT_SHA
     - docker push $AWS_ECR_URL/$CONTAINER_NAME:latest
+    - docker push $AWS_ECR_URL/$CONTAINER_NAME:SCI_COMMIT_SHA
 
 deploy:
   stage: deploy
   script:
     - pip install ecs-deploy
     - sh ./scripts/login-ecr.sh
-    - ecs deploy ${CLUSTER_NAME} ${SERVICE_NAME} --tag latest
+    - ecs deploy ${CLUSTER_NAME} ${SERVICE_NAME} --tag SCI_COMMIT_SHA
