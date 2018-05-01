@@ -5,7 +5,7 @@ defmodule Retriever do
   require Logger
 
   def fetch(%Link{destination_url: url}) do
-    Logger.info "Retrieving #{url}"
+    Logger.info "Fetching #{url}"
     url
     |> HTTPoison.get(request_headers(), options())
     |> parse_response
