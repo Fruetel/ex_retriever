@@ -11,6 +11,7 @@ defmodule Retriever do
     |> parse_response
     |> Map.put(:url, url)
     |> publish
+    |> IO.inspect
   end
 
   defp publish(document) do
@@ -18,7 +19,6 @@ defmodule Retriever do
     primary_content_type = Document.primary_content_type(document)
     secondary_content_type = Document.secondary_content_type(document)
     routing_key = "retrieved.#{primary_content_type}.#{secondary_content_type}"
-    Logger.info "Sending to publisher"
     :ok = Publisher.publish("documents", routing_key, document)
     document
   end
