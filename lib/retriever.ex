@@ -11,7 +11,6 @@ defmodule Retriever do
     |> parse_response
     |> Map.put(:url, url)
     |> publish
-    |> IO.inspect
   end
 
   defp publish(document) do

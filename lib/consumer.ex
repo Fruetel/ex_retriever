@@ -43,10 +43,10 @@ defmodule Consumer do
     payload
     |> Poison.decode!(as: %Link{})
     |> Retriever.fetch
-
-    Logger.info "Retrieved #{payload[:destination_url]}"
+    |> IO.inspect
 
     Basic.ack channel, tag
+    Logger.info "Ack successful"
 
     rescue _exception ->
     Basic.reject channel, tag, requeue: not redelivered
