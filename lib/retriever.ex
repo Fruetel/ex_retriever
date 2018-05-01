@@ -23,6 +23,7 @@ defmodule Retriever do
   end
 
   defp parse_response({:ok, response}) do
+    Logger.info "Got response with status code #{response.status_code}"
     %Document{
       status_code: response.status_code,
       headers: response_headers(response),
