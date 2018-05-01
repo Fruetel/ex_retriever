@@ -10,6 +10,7 @@ defmodule Retriever do
     |> HTTPoison.get(request_headers(), options())
     |> parse_response
     |> Map.put(:url, url)
+    |> IO.inspect
     |> publish
   end
 
