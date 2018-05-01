@@ -14,7 +14,7 @@ defmodule ExRetriever.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [extra_applications: [:lager, :logger, :httpoison],
+    [extra_applications: [:lager, :logger, :httpotion],
      mod: {ExRetriever, []}]
   end
 
@@ -28,7 +28,7 @@ defmodule ExRetriever.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:httpoison, "~> 0.13.0"},
+    [{:httpotion, "~> 3.1.0"},
      {:amqp, "~> 1.0"},
      {:credo, "~> 0.7", only: :dev},
      {:poison, "~> 3.0"},

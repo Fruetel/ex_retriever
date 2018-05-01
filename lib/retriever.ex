@@ -7,7 +7,7 @@ defmodule Retriever do
   def fetch(%Link{destination_url: url}) do
     Logger.info "Fetching #{url}"
     url
-    |> HTTPoison.get(request_headers(), options())
+    |> HTTPotion.get(options())
     |> parse_response
     |> Map.put(:url, url)
     |> publish
@@ -43,8 +43,8 @@ defmodule Retriever do
 
   defp options do
     [
+      headers: request_headers(),
       timeout: get_integer_config(:timeout),
-      recv_timeout: get_integer_config(:recv_timeout)
     ]
   end
 
