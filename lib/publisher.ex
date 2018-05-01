@@ -17,15 +17,15 @@ defmodule Publisher do
   end
 
   def publish(exchange, routing_key, %Document{} = document) do
-    Logger.info "About to cast #{document.url}"
+    Logger.debug "About to cast #{document.url}"
     GenServer.cast(:publisher, {:publish, exchange, routing_key, document})
   end
 
   def handle_cast({:publish, exchange, routing_key, %Document{} = document}, state) do
-    Logger.info "Publishing to #{exchange} with routing key #{routing_key}"
+    Logger.debug "Publishing to #{exchange} with routing key #{routing_key}"
     payload = Document.encode(document)
     Basic.publish(state[:channel], exchange, routing_key, payload)
-    Logger.info "Publish done"
+    Logger.debug "Publish done"
     {:noreply, state}
   end
 
