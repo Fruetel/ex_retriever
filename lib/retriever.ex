@@ -7,7 +7,7 @@ defmodule Retriever do
   def fetch(%Link{destination_url: url}) do
     Logger.info "Fetching #{url}"
     url
-    |> HTTPotion.get(options())
+    |> HTTPotion.get!(options())
     |> parse_response
     |> Map.put(:url, url)
     |> publish
@@ -22,7 +22,7 @@ defmodule Retriever do
     document
   end
 
-  defp parse_response({:ok, response}) do
+  defp parse_response(response) do
     Logger.info "Got response with status code #{response.status_code}"
     %Document{
       status_code: response.status_code,

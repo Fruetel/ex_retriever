@@ -16,10 +16,10 @@ defmodule RetrieverTest do
       url: "http://www.example.com"
     }
 
-    with_mock HTTPotion, [get: fn _, _ -> {:ok, http_response} end] do
+    with_mock HTTPotion, [get!: fn _, _ -> http_response end] do
       result = Retriever.fetch(%Link{destination_url: "http://www.example.com"})
       assert expected_result == result
-      assert called HTTPotion.get(
+      assert called HTTPotion.get!(
         "http://www.example.com",
         [
           headers: [{"user-agent", "Mozilla/5.0 (compatible; ExRetriever; +https://github.com/Fruetel/ex_retriever)"}],
