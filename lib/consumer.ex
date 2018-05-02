@@ -47,9 +47,11 @@ defmodule Consumer do
     Basic.ack channel, tag
     Logger.debug "Ack successful"
 
-    rescue _exception ->
+    rescue exception ->
+    stacktrace = System.stacktrace
     Basic.reject channel, tag, requeue: not redelivered
     Logger.error "Error processing #{payload}"
+    reraise exception, stacktrace
   end
 
   defp rabbitmq_connect do
