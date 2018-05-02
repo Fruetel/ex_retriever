@@ -46,7 +46,7 @@ defmodule Consumer do
     |> IO.inspect
 
     Basic.ack channel, tag
-    Logger.info "Ack successful"
+    Logger.debug "Ack successful"
 
     rescue _exception ->
     Basic.reject channel, tag, requeue: not redelivered
