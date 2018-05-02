@@ -7,7 +7,7 @@ defmodule Retriever do
   def fetch(%Link{destination_url: url}) do
     Logger.info "Fetching #{url}"
     url
-    |> HTTPotion.get!(options())
+    |> HTTPotion.get(options())
     |> parse_response
     |> Map.put(:url, url)
     |> publish
@@ -37,7 +37,7 @@ defmodule Retriever do
 
   defp request_headers do
     [
-      {"user-agent", Application.get_env(:ex_retriever, Retriever)[:user_agent]}
+      "User-Agent": Application.get_env(:ex_retriever, Retriever)[:user_agent]
     ]
   end
 
@@ -46,6 +46,7 @@ defmodule Retriever do
       headers: request_headers(),
       timeout: get_integer_config(:timeout),
     ]
+    |> IO.inspect
   end
 
   defp get_integer_config(key) do
