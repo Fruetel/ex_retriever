@@ -32,7 +32,7 @@ defmodule Retriever do
   end
 
   defp response_headers(response) do
-    response.headers.hdrs
+    Map.new(response.headers)
   end
 
   defp request_headers do
