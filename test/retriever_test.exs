@@ -5,7 +5,7 @@ defmodule RetrieverTest do
   test "It fetches a url" do
     http_response = %{
       status_code: 200,
-      headers: [{"key", "value"}],
+      headers: %{"key" => "value"},
       body: "some body"
     }
 

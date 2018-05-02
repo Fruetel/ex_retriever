@@ -43,7 +43,6 @@ defmodule Consumer do
     payload
     |> Poison.decode!(as: %Link{})
     |> Retriever.fetch
-    |> IO.inspect
 
     Basic.ack channel, tag
     Logger.debug "Ack successful"
